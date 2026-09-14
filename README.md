@@ -67,26 +67,26 @@ Each entry in `*_scenarios.json` is one scenario:
 
 **Price** (continuous, self-anchored linear):
 ```
-u_S_price(p) = clip( (p − cost) / (budget − cost) · 10, 0, 10)
-u_B_price(p) = clip( (budget − p) / (budget − cost) · 10, 0, 10)
+u_N_price(p) = clip( (p − cost) / (budget − cost) · 10, 0, 10)
+u_P_price(p) = clip( (budget − p) / (budget − cost) · 10, 0, 10)
 ```
 
 **Prepayment** (enumerated, zero-sum mirror):
 ```
-u_S_prepay(ρ) = clip( (ρ − 0.20) / 0.80 · 10, 0, 10)       
-u_B_prepay(ρ) = 10 − u_S_prepay(ρ)
+u_N_prepay(ρ) = clip( (ρ − 0.20) / 0.80 · 10, 0, 10)       
+u_P_prepay(ρ) = 10 − u_S_prepay(ρ)
 ```
 
 **Payment terms** (enumerated, zero-sum mirror):
 ```
-u_S_terms(t)  = clip( (60 − t) / 45 · 10, 0, 10)            
-u_B_terms(t)  = 10 − u_S_terms(t)
+u_N_terms(t)  = clip( (60 − t) / 45 · 10, 0, 10)            
+u_P_terms(t)  = 10 − u_S_terms(t)
 ```
 
 **Delivery** (discrete, inverse-urgency, zero-sum mirror):
 ```
-u_B_deliv(d) = clip( (1/d − 1/10) / (1/3 − 1/10) · 10, −10, 10)  
-u_S_deliv(d) = 10 − u_B_deliv(d)
+u_N_deliv(d) = clip( (1/d − 1/10) / (1/3 − 1/10) · 10, −10, 10)  
+u_P_deliv(d) = 10 − u_B_deliv(d)
 ```
 
 ### 2. Total utility (god’s-eye, ex-post)
@@ -94,8 +94,8 @@ u_S_deliv(d) = 10 − u_B_deliv(d)
 Utilities are weighted sums with the scenario’s **true** private weights — not the negotiator’s internal estimate:
 
 ```
-u_N(o) = u_S(o) = Σ_{j∈{p,r,t,d}} w_S_true[j] · u_S_j(o_j)        # negotiation-agent utility
-u_P(o) = u_B(o) = Σ_{j∈{p,r,t,d}} w_B_true[j] · u_B_j(o_j)        # partner-agent utility
+u_N(o) = Σ_{j∈{p,r,t,d}} w_S_true[j] · u_S_j(o_j)        # negotiation-agent utility
+u_P(o) = Σ_{j∈{p,r,t,d}} w_B_true[j] · u_B_j(o_j)        # partner-agent utility
 TW(o)  = u_N(o) + u_P(o)                                          # total welfare
 ```
 
